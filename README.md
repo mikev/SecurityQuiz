@@ -17,14 +17,16 @@ Thus my API takes longer than 2 seconds to respond.
 A reasonable implementation solution is to cache the intermediate API results.  Conceptualy easy, but it does require setting up a local cache.  It
 also involves design decisions about merging or clearing existing data.  Future improvement...
 
-2. Output Format
-My output almost matches the spec.  Howver, the spec was vague about whether the json is normalized or exactly matches the source API data.  I did normalize the output.
-Also, to keep the code generic, I always normalize the incident fieldnames json, e.g. with the field name ""machine_ip" for example
-This may not be what the spec author intended.  My solution is written in C# which strongly types the data.  Passing the json data through
-is easier in a dynamically typed language, comnpared to C#.
+2. Added json string
+My json includes a key string "Data" in the output.  I didn't have time to remove this extraneous json key string.
 
-From a design and product perspective a normalized API would be better than exposing the underlying API data structures.  In any case this
-should be clarified.
+All my incident data is normalized to this format
 
-3. Added json string
-My json includes "Data" in the output.  I didn't have time to remove this extraneous json string.
+                {
+                "type": "executable"
+                "priority": "critical",
+                "machine_ip": "17.99.238.86",
+                "timestamp": 1500020421.9333,
+                }
+
+The problem specifies normalized data, but this exact format should be clarified.
